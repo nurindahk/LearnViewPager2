@@ -1,5 +1,7 @@
 package com.geeksfarm.training.fragmentwithviewpager;
 
+import android.view.Menu;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,7 @@ public class MyAdapter extends FragmentStatePagerAdapter {
     private static ArrayList<String> myTitles;
     private static ArrayList<String> myData;
 
+    private static ArrayList<MenuMakanan> myFoodMenus;
 
     private static int numOfItems;
 
@@ -20,7 +23,15 @@ public class MyAdapter extends FragmentStatePagerAdapter {
         MyAdapter myAdapter = new MyAdapter(fragmentManager);
         myTitles = titles;
         myData = data;
-        numOfItems = data.size(); // set numOfItems as size of data or titles
+        numOfItems = titles.size(); // set numOfItems as size of data or titles
+        return myAdapter;
+    }
+
+    //Overload newInstance() above
+    public static MyAdapter newInstance(FragmentManager fragmentManager, ArrayList<MenuMakanan> kumpulanMenuMakanan){
+        MyAdapter myAdapter = new MyAdapter(fragmentManager);
+        myFoodMenus = kumpulanMenuMakanan;
+        numOfItems = kumpulanMenuMakanan.size();
         return myAdapter;
     }
 
@@ -31,16 +42,24 @@ public class MyAdapter extends FragmentStatePagerAdapter {
     public MyAdapter(FragmentManager fragmentManager){
         super(fragmentManager); //Deprecated
     }
+    public MyAdapter(FragmentManager fragmentManager, ArrayList<MenuMakanan> data){
+        super(fragmentManager); //Deprecated
+        myFoodMenus = data;
+        numOfItems = data.size();
+    }
 
     @NonNull
     @Override
     public Fragment getItem(int position) { //function
-        String text = myData.get(position);
+        ArrayList<MenuMakanan.Makanan> data  = myFoodMenus.get(position).getData();
 
         //FirstFragment firstFragment = new FirstFragment();
-        FirstFragment firstFragment = FirstFragment.newInstance(text); //call newInstance()
+        //FirstFragment firstFragment = FirstFragment.newInstance(text); //call newInstance()
 
-        return firstFragment;
+        SecondFragment fragment = SecondFragment.newInstance(data);
+        //SecondFragment fragment = new SecondFragment();
+        //fragment.setData(data);
+        return fragment;
 
     }
 
@@ -52,7 +71,14 @@ public class MyAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        String title = myTitles.get(position);
+        String title = "";
+        try {
+            title = myFoodMenus.get(position).getNamaMenu(); // object MenuMakanan menu.getNamaMenu()
+        }
+        catch (IndexOutOfBoundsException e){
+            title = "Apa aja";
+        }
+
         return title;
 
     }

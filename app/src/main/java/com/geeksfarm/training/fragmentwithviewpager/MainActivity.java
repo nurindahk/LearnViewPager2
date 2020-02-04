@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> menuTitleData = new ArrayList<>();
     ArrayList<String> data = new ArrayList<>();
 
+    ArrayList<MenuMakanan> kumpulanMenuMakanan = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +32,15 @@ public class MainActivity extends AppCompatActivity {
         generateTitle();
         generateData();
 
+        generateMenu();
+
 
         viewPager = findViewById(R.id.view_pager);
         //myAdapter = new MyAdapter(getSupportFragmentManager()); // buat object adapter
-        myAdapter = MyAdapter.newInstance(getSupportFragmentManager(),menuTitleData,data);
+        //myAdapter = MyAdapter.newInstance(getSupportFragmentManager(),menuTitleData,data);
+        myAdapter = MyAdapter.newInstance(getSupportFragmentManager(),kumpulanMenuMakanan);
+
+
         viewPager.setAdapter(myAdapter);
 
         tabMenu = findViewById(R.id.tab_menu);
@@ -47,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         menuTitleData.add("Paket Hemat");
         menuTitleData.add("Ayam");
         menuTitleData.add("Makanan");
-        menuTitleData.add("Minuman");
+//        menuTitleData.add("Minuman");
 
     }
 
@@ -60,6 +67,21 @@ public class MainActivity extends AppCompatActivity {
         data.add("Data 6");
     }
 
+    private void generateMenu() {
 
+        ArrayList<MenuMakanan.Makanan> menuAyam = new ArrayList<>();
+        menuAyam.add(new MenuMakanan.Makanan("Ayam Goreng", "15000"));
+        menuAyam.add(new MenuMakanan.Makanan("Ayam Rica-rica", "15000"));
+        menuAyam.add(new MenuMakanan.Makanan("Ayam Bakar", "15000"));
+
+        ArrayList<MenuMakanan.Makanan> menuMie = new ArrayList<>();
+        menuMie.add(new MenuMakanan.Makanan("Mie Goreng", "15000"));
+        menuMie.add(new MenuMakanan.Makanan("Mie Rica-rica", "15000"));
+        menuMie.add(new MenuMakanan.Makanan("Mie Bakar", "15000"));
+
+        kumpulanMenuMakanan.add(new MenuMakanan("Ayam", menuAyam));
+        kumpulanMenuMakanan.add(new MenuMakanan("Mie", menuMie));
+
+    }
 
 }
