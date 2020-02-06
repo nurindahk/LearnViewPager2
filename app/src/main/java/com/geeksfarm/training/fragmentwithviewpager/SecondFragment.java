@@ -1,6 +1,7 @@
 package com.geeksfarm.training.fragmentwithviewpager;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,10 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -55,6 +58,17 @@ public class SecondFragment extends Fragment {
         arrayAdapter = new DaftarMenuAdapter(getContext(),data);
         listView = view.findViewById(R.id.lv_menu_makanan);
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent next = new Intent(getActivity(), DeskripsiActivity.class);
+                next.putExtra("makanan", arrayAdapter.getItem(position));
+                startActivity(next);
+                //Toast.makeText(getActivity(), String.valueOf(position), Toast.LENGTH_LONG).show();
+            }
+        });
+
         return view;
     }
 

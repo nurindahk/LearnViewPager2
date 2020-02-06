@@ -25,10 +25,14 @@ public class DaftarMenuAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public MenuMakanan.Makanan getItem(int position){
+        MenuMakanan.Makanan makanan = (MenuMakanan.Makanan) daftarMakanan.get(position);
+        return makanan;
+    }
+    /*public Object getItem(int position) {
         return daftarMakanan.get(position);
     }
-
+*/
     @Override
     public long getItemId(int position) {
         return position;

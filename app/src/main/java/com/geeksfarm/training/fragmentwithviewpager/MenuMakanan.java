@@ -13,6 +13,24 @@ public class MenuMakanan {
 
         private String nama;
         private String harga;
+        private String deskripsi;
+        private int image;
+
+
+        public Makanan(String nama, String harga, String deskripsi){
+            this.nama = nama;
+            this.harga = harga;
+            this.deskripsi = deskripsi;
+        }
+
+        public Makanan(String nama, String harga, String deskripsi, int image){
+            this.nama = nama;
+            this.harga = harga;
+            this.deskripsi = deskripsi;
+            this.image = image;
+        }
+
+
 
         public String getNama() {
             return nama;
@@ -22,10 +40,18 @@ public class MenuMakanan {
             return harga;
         }
 
+        public String getDeskripsi() {
+            return deskripsi;
+        }
+
+        public int getImage() {
+            return image;
+        }
+
+
         public Makanan(String nm, String price){
             this.nama = nm;
             this.harga = price;
-
 
         }
 
@@ -38,11 +64,17 @@ public class MenuMakanan {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.nama);
             dest.writeString(this.harga);
+            dest.writeString(this.deskripsi);
+            dest.writeInt(this.image);
+
         }
 
         protected Makanan(Parcel in) {
             this.nama = in.readString();
             this.harga = in.readString();
+            this.deskripsi = in.readString();
+            this.image = in.readInt();
+
         }
 
         public static final Parcelable.Creator<Makanan> CREATOR = new Parcelable.Creator<Makanan>() {
